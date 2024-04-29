@@ -100,7 +100,7 @@
         <div id="resultado"></div>
         <div id="codigoErroneo"></div>
         <div id="codigoErrores" style="display: none;"></div>
-        <button id="botonMenuPrincipal" style="display: none;" onclick="irAlMenu()">Enviar otro código</button>
+        <button id="botonMenuPrincipal" style="display: none;" onclick="irAlMenu()">Introducir otro código</button>
         <img src="https://raw.githubusercontent.com/thiagopps/cartas/extra/5a177da34cdc601d2a6d0c9d4a942796.gif" alt="otro gif" id="otroGIF" style="display: none; margin: auto; margin-top: 20px; height: 200px; width: 200px;">
 
         
@@ -108,10 +108,11 @@
     <script>
         // Objeto que almacena los códigos y sus respectivas cartas
         var codigos = {
-            "easteregg": "te adoro",
-            
+            "2323": "Este código lo puedes canjear por una cita en el cine con la película que tú quieras",
+            "5656": "Este código contiene un vale por un masaje"
         };
     
+        
         // Variable para controlar si todas las cartas se han cargado correctamente
         var cartasCargadas = false;
     
@@ -160,31 +161,47 @@
         }
     
         function validarCodigo() {
-            limpiarResultado();
+    limpiarResultado();
     
-            var codigoUsuario = document.getElementById("codigo").value;
+    var codigoUsuario = document.getElementById("codigo").value;
     
-            if (codigoUsuario === "") {
-                return;
-            }
+    if (codigoUsuario === "") {
+        return;
+    }
     
-            if (codigoUsuario in codigos) {
-                var resultadoDiv = document.getElementById("resultado");
-                resultadoDiv.style.display = "flex";
-                var texto = codigos[codigoUsuario];
-                resultadoDiv.innerHTML = "<span style='font-size: 20px; font-weight: bold;'>" + texto + "</span>"; // Utilizamos = en lugar de +=
-                document.getElementById("botonMenuPrincipal").style.display = "inline-block";
+    if (codigoUsuario in codigos) {
+        var resultadoDiv = document.getElementById("resultado");
+        resultadoDiv.style.display = "flex";
+        var texto = codigos[codigoUsuario];
+        resultadoDiv.innerHTML = "<span style='font-size: 20px; font-weight: bold;'>" + texto + "</span>"; // Utilizamos = en lugar de +=
+        document.getElementById("botonMenuPrincipal").style.display = "inline-block";
     
-                document.getElementById("formulario").style.display = "none";
+        document.getElementById("formulario").style.display = "none";
     
-                // Mostrar el segundo GIF cuando se muestra el mensaje
-                mostrarOtroGIF();
-            } else {
-                var contadorErrores = 1;
-                var codigoErroneoDiv = document.getElementById("codigoErroneo");
-                codigoErroneoDiv.innerText = "¡Código Erróneo! " + contadorErrores + " Error";
-            }
+        // Mostrar el segundo GIF cuando se muestra el mensaje
+        mostrarOtroGIF();
+        
+        // Ocultar el mensaje de error
+        ocultarMensajeError();
+    } else {
+        var contadorErrores = parseInt(document.getElementById("codigoErroneo").innerText.match(/\d+/)); // Obtener el contador de errores actual
+        contadorErrores = contadorErrores ? contadorErrores + 1 : 1; // Incrementar el contador de errores
+        mostrarContadorErrores(contadorErrores); // Mostrar el nuevo contador de errores
+    
+        // Mostrar mensaje de error solo si hay más de 1 error
+        if (contadorErrores > 1) {
+            
+            var codigoErroneoDiv = document.getElementById("codigoErroneo");
+            codigoErroneoDiv.innerText = "¡Código Erróneo! " + contadorErrores + " Errores";
         }
+    }
+}
+
+function ocultarMensajeError() {
+    var codigoErroneoDiv = document.getElementById("codigoErroneo");
+    codigoErroneoDiv.innerText = ""; // Limpiar el mensaje de error
+}
+
     
         function limpiarResultado() {
             var resultadoDiv = document.getElementById("resultado");
@@ -193,7 +210,7 @@
     
         function mostrarContadorErrores(contador) {
             var contadorDiv = document.getElementById("codigoErroneo");
-            contadorDiv.innerText = "¡Código Erróneo! " + contador + " Errores";
+            contadorDiv.innerText = "Código equivocado: " + contador + " errores";
         }
     
         function mostrarOtroGIF() {
