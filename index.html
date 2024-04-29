@@ -142,19 +142,19 @@
         // Llamamos a la función cargarCarta() para cargar el contenido de cada carta cuando la página se carga
         window.onload = function() {
             cargarCarta("https://raw.githubusercontent.com/thiagopps/cartas/extra/carta1.txt", function(carta) {
-                codigos["dulzura", "Dulzura"] = carta;
+                codigos["dulzura"] = carta;
                 verificarCartasCargadas();
             });
             cargarCarta("https://raw.githubusercontent.com/thiagopps/cartas/extra/carta2.txt", function(carta) {
-                codigos["lunar", "Lunar"] = carta;
+                codigos["lunar"] = carta;
                 verificarCartasCargadas();
             });
             cargarCarta("https://raw.githubusercontent.com/thiagopps/cartas/extra/carta3.txt", function(carta) {
-                codigos["amor", "Amor"] = carta;
+                codigos["amor"] = carta;
                 verificarCartasCargadas();
             });
             cargarCarta("https://raw.githubusercontent.com/thiagopps/cartas/extra/carta4.txt", function(carta) {
-                codigos["crema", "Crema"] = carta;
+                codigos["crema"] = carta;
                 verificarCartasCargadas();
             });
             // Agrega aquí la carga de las cartas 3 y 4 de manera similar
@@ -173,40 +173,38 @@
     
         function validarCodigo() {
     limpiarResultado();
-    
-    var codigoUsuario = document.getElementById("codigo").value;
+
+    var codigoUsuario = document.getElementById("codigo").value.toLowerCase(); // Convertir a minúsculas
     
     if (codigoUsuario === "") {
         return;
     }
-    
+
+    // Realizar la comparación con los códigos convertidos a minúsculas
     if (codigoUsuario in codigos) {
         var resultadoDiv = document.getElementById("resultado");
         resultadoDiv.style.display = "flex";
         var texto = codigos[codigoUsuario];
-        resultadoDiv.innerHTML = "<span style='font-size: 20px; font-weight: bold;'>" + texto + "</span>"; // Utilizamos = en lugar de +=
+        resultadoDiv.innerHTML = "<span style='font-size: 20px; font-weight: bold;'>" + texto + "</span>";
         document.getElementById("botonMenuPrincipal").style.display = "inline-block";
-    
+
         document.getElementById("formulario").style.display = "none";
-    
-        // Mostrar el segundo GIF cuando se muestra el mensaje
+
         mostrarOtroGIF();
-        
-        // Ocultar el mensaje de error
+
         ocultarMensajeError();
     } else {
         var contadorErrores = parseInt(document.getElementById("codigoErroneo").innerText.match(/\d+/)); // Obtener el contador de errores actual
-        contadorErrores = contadorErrores ? contadorErrores + 1 : 1; // Incrementar el contador de errores
-        mostrarContadorErrores(contadorErrores); // Mostrar el nuevo contador de errores
-    
-        // Mostrar mensaje de error solo si hay más de 1 error
+        contadorErrores = contadorErrores ? contadorErrores + 1 : 1;
+        mostrarContadorErrores(contadorErrores);
+
         if (contadorErrores > 1) {
-            
             var codigoErroneoDiv = document.getElementById("codigoErroneo");
-            codigoErroneoDiv.innerText = "¡Código Erróneo! " + contadorErrores + " Errores";
+            codigoErroneoDiv.innerText = "Código equivocado: " + contadorErrores + " errores";
         }
     }
 }
+
 
 function ocultarMensajeError() {
     var codigoErroneoDiv = document.getElementById("codigoErroneo");
@@ -221,7 +219,7 @@ function ocultarMensajeError() {
     
         function mostrarContadorErrores(contador) {
             var contadorDiv = document.getElementById("codigoErroneo");
-            contadorDiv.innerText = "¡Código Erróneo! " + contador + " Errores";
+            contadorDiv.innerText = "Código equivocado: " + contador + " errores";
         }
     
         function mostrarOtroGIF() {
