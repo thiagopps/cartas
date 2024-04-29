@@ -87,6 +87,17 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
+                /* Estilo para el enlace */
+                p a {
+            text-decoration: none;
+            color: #e85a71; /* Color del botón */
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        p a:hover {
+            color: #d04a61; /* Cambio de color al pasar el cursor */
+        }
     </style>
 </head>
 <body>
@@ -131,19 +142,19 @@
         // Llamamos a la función cargarCarta() para cargar el contenido de cada carta cuando la página se carga
         window.onload = function() {
             cargarCarta("https://raw.githubusercontent.com/thiagopps/cartas/extra/carta1.txt", function(carta) {
-                codigos["1234"] = carta;
+                codigos["dulzura", "Dulzura"] = carta;
                 verificarCartasCargadas();
             });
             cargarCarta("https://raw.githubusercontent.com/thiagopps/cartas/extra/carta2.txt", function(carta) {
-                codigos["4567"] = carta;
+                codigos["lunar", "Lunar"] = carta;
                 verificarCartasCargadas();
             });
             cargarCarta("https://raw.githubusercontent.com/thiagopps/cartas/extra/carta3.txt", function(carta) {
-                codigos["8"] = carta;
+                codigos["amor", "Amor"] = carta;
                 verificarCartasCargadas();
             });
             cargarCarta("https://raw.githubusercontent.com/thiagopps/cartas/extra/carta4.txt", function(carta) {
-                codigos["9"] = carta;
+                codigos["crema", "Crema"] = carta;
                 verificarCartasCargadas();
             });
             // Agrega aquí la carga de las cartas 3 y 4 de manera similar
@@ -192,7 +203,7 @@
         if (contadorErrores > 1) {
             
             var codigoErroneoDiv = document.getElementById("codigoErroneo");
-            codigoErroneoDiv.innerText = "Código equivocado: " + contadorErrores + " errores";
+            codigoErroneoDiv.innerText = "¡Código Erróneo! " + contadorErrores + " Errores";
         }
     }
 }
@@ -210,7 +221,7 @@ function ocultarMensajeError() {
     
         function mostrarContadorErrores(contador) {
             var contadorDiv = document.getElementById("codigoErroneo");
-            contadorDiv.innerText = "Código equivocado: " + contador + " errores";
+            contadorDiv.innerText = "¡Código Erróneo! " + contador + " Errores";
         }
     
         function mostrarOtroGIF() {
@@ -239,7 +250,8 @@ function ocultarMensajeError() {
     </script>
     <p>CON MUCHISIMO AMOR, PARA MAI <3</p>
     
-    
+    <p>Todos los codigos: <a href="/lista.html" style="text-decoration: none; color: #e85a71; font-weight: bold;">acá</a>.</p>
+
     
 
 </body>
