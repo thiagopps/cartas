@@ -83,6 +83,15 @@
             padding: 20px;
         }
 
+        #resultado img {
+            max-width: 100%; /* Ajustar el ancho máximo de la imagen al contenedor */
+            max-height: 80vh; /* Establecer la altura máxima para evitar que la imagen sea demasiado grande */
+            display: block; /* Asegurar que la imagen se muestre correctamente */
+            margin: auto; /* Centrar la imagen horizontalmente */
+            border-radius: 10px; /* Agregar un borde redondeado */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Agregar sombra */
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -113,8 +122,6 @@
         <div id="codigoErrores" style="display: none;"></div>
         <button id="botonMenuPrincipal" style="display: none;" onclick="irAlMenu()">Introducir otro código</button>
         <img src="https://raw.githubusercontent.com/thiagopps/cartas/extra/5a177da34cdc601d2a6d0c9d4a942796.gif" alt="otro gif" id="otroGIF" style="display: none; margin: auto; margin-top: 20px; height: 200px; width: 200px;">
-
-        
     </div>
     <script>
         // Objeto que almacena los códigos y sus respectivas cartas
@@ -123,7 +130,12 @@
             "5656": "Este código contiene un vale por un masaje"
         };
     
-        
+        // URL de las imágenes asociadas a los códigos
+        var imagenTren = "https://raw.githubusercontent.com/thiagopps/cartas/extra/undefined%20-%20Imgur.jpg";
+        var imagenKhe = "https://raw.githubusercontent.com/thiagopps/cartas/extra/IMG-20240501-WA0029.jpg";
+        var imagenLezama = "https://raw.githubusercontent.com/thiagopps/cartas/extra/IMG-20240427-WA0049.jpg";
+        var imagenChina = "https://raw.githubusercontent.com/thiagopps/cartas/extra/IMG-20240429-WA0010.jpg";
+    
         // Variable para controlar si todas las cartas se han cargado correctamente
         var cartasCargadas = false;
     
@@ -170,51 +182,87 @@
             var cantidadCartasCargadas = Object.keys(codigos).length;
     
             // Verificamos si se han cargado todas las cartas
-            if (cantidadCartasCargadas === 4) { // Cambia a 4 si agregas las cartas 3 y 4
+            if (cantidadCartasCargadas >= 5) { // Cambia a 5 si agregas más cartas
                 cartasCargadas = true;
             }
         }
     
         function validarCodigo() {
-    limpiarResultado();
-
-    var codigoUsuario = document.getElementById("codigo").value.toLowerCase(); // Convertir a minúsculas
+            limpiarResultado();
     
-    if (codigoUsuario === "") {
-        return;
-    }
-
-    // Realizar la comparación con los códigos convertidos a minúsculas
-    if (codigoUsuario in codigos) {
-        var resultadoDiv = document.getElementById("resultado");
-        resultadoDiv.style.display = "flex";
-        var texto = codigos[codigoUsuario];
-        resultadoDiv.innerHTML = "<span style='font-size: 20px; font-weight: bold;'>" + texto + "</span>";
-        document.getElementById("botonMenuPrincipal").style.display = "inline-block";
-
-        document.getElementById("formulario").style.display = "none";
-
-        mostrarOtroGIF();
-
-        ocultarMensajeError();
-    } else {
-        var contadorErrores = parseInt(document.getElementById("codigoErroneo").innerText.match(/\d+/)); // Obtener el contador de errores actual
-        contadorErrores = contadorErrores ? contadorErrores + 1 : 1;
-        mostrarContadorErrores(contadorErrores);
-
-        if (contadorErrores > 1) {
-            var codigoErroneoDiv = document.getElementById("codigoErroneo");
-            codigoErroneoDiv.innerText = "Código equivocado: " + contadorErrores + " errores";
+            var codigoUsuario = document.getElementById("codigo").value.toLowerCase(); // Convertir a minúsculas
+    
+            if (codigoUsuario === "") {
+                return;
+            }
+    
+            // Realizar la comparación con los códigos convertidos a minúsculas
+            if (codigoUsuario in codigos) {
+                var resultadoDiv = document.getElementById("resultado");
+                resultadoDiv.style.display = "flex";
+                var texto = codigos[codigoUsuario];
+                resultadoDiv.innerHTML = "<span style='font-size: 20px; font-weight: bold;'>" + texto + "</span>";
+                document.getElementById("botonMenuPrincipal").style.display = "inline-block";
+    
+                document.getElementById("formulario").style.display = "none";
+    
+                mostrarOtroGIF();
+    
+                ocultarMensajeError();
+            } else {
+                // Verificamos si el código ingresado corresponde a una imagen asociada
+                switch (codigoUsuario) {
+                    case "tren": // Comprobamos si el código ingresado es "Tren"
+                        mostrarImagen(imagenTren);
+                        break;
+                    case "khe :v": // Comprobamos si el código ingresado es "khe :v"
+                        mostrarImagen(imagenKhe);
+                        break;
+                    case "lezama": // Comprobamos si el código ingresado es "lezama"
+                        mostrarImagen(imagenLezama);
+                        break;
+                    case "china":
+                        mostrarImagen(imagenChina);
+                        break;
+                    default:
+                        var contadorErrores = parseInt(document.getElementById("codigoErroneo").innerText.match(/\d+/)); // Obtener el contador de errores actual
+                        contadorErrores = contadorErrores ? contadorErrores + 1 : 1;
+                        mostrarContadorErrores(contadorErrores);
+    
+                        if (contadorErrores > 1) {
+                            var codigoErroneoDiv = document.getElementById("codigoErroneo");
+                            codigoErroneoDiv.innerText = "Código equivocado: " + contadorErrores + " errores";
+                        }
+                        break;
+                }
+            }
         }
-    }
+    
+        function mostrarImagen(url) {
+    limpiarResultado(); // Limpiar resultados anteriores
+    
+    var resultadoDiv = document.getElementById("resultado");
+    resultadoDiv.style.display = "flex";
+
+    // Crear un elemento <img> y establecer su atributo src con la URL de la imagen asociada al código
+    var imagen = document.createElement("img");
+    imagen.src = url;
+    imagen.style.maxWidth = "100%"; // Ajustar el tamaño máximo de la imagen al ancho del contenedor
+    imagen.style.maxHeight = "80vh"; // Establecer una altura máxima para evitar desbordamientos en dispositivos móviles
+    resultadoDiv.appendChild(imagen);
+
+    // Ocultar el formulario y otros elementos
+    document.getElementById("formulario").style.display = "none";
+    document.getElementById("codigoErroneo").style.display = "none";
+    document.getElementById("botonMenuPrincipal").style.display = "block";
+
+    ocultarOtroGIF();
 }
-
-
-function ocultarMensajeError() {
-    var codigoErroneoDiv = document.getElementById("codigoErroneo");
-    codigoErroneoDiv.innerText = ""; // Limpiar el mensaje de error
-}
-
+    
+        function ocultarMensajeError() {
+            var codigoErroneoDiv = document.getElementById("codigoErroneo");
+            codigoErroneoDiv.innerText = ""; // Limpiar el mensaje de error
+        }
     
         function limpiarResultado() {
             var resultadoDiv = document.getElementById("resultado");
@@ -250,11 +298,11 @@ function ocultarMensajeError() {
             }
         });
     </script>
+    
+    
     <p>CON MUCHISIMO AMOR, PARA MAI <3</p>
     
     <p>Todos los codigos: <a href="https://thiagopps.github.io/lista/" style="text-decoration: none; color: #e85a71; font-weight: bold;">acá</a>.</p>
-
-    
 
 </body>
 
