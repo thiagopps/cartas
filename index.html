@@ -135,6 +135,7 @@
         var imagenKhe = "https://raw.githubusercontent.com/thiagopps/cartas/extra/IMG-20240501-WA0029.jpg";
         var imagenLezama = "https://raw.githubusercontent.com/thiagopps/cartas/extra/IMG-20240427-WA0049.jpg";
         var imagenChina = "https://raw.githubusercontent.com/thiagopps/cartas/extra/IMG-20240429-WA0010.jpg";
+        var imagenMua = "https://raw.githubusercontent.com/thiagopps/cartas/extra/IMG-20240501-WA0021.jpg";
     
         // Variable para controlar si todas las cartas se han cargado correctamente
         var cartasCargadas = false;
@@ -223,6 +224,9 @@
                         break;
                     case "china":
                         mostrarImagen(imagenChina);
+                        break;
+                    case "mua":
+                        mostrarImagen(imagenMua);
                         break;
                     default:
                         var contadorErrores = parseInt(document.getElementById("codigoErroneo").innerText.match(/\d+/)); // Obtener el contador de errores actual
