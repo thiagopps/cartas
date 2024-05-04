@@ -170,14 +170,19 @@
                 codigos["crema"] = carta;
                 verificarCartasCargadas();
             });
-            cargarCarta("https://raw.githubusercontent.com/thiagopps/cartas/extra/carta5.txt", function(carta) {
+
+ cargarCarta("https://raw.githubusercontent.com/thiagopps/cartas/extra/carta5.txt", function(carta) {
                 codigos["helado"] = carta;
                 verificarCartasCargadas();
             });
-            // Agrega aquí la carga de las cartas 3 y 4 de manera similar
+cargarCarta("https://raw.githubusercontent.com/thiagopps/cartas/extra/carta6.txt", function(carta) {
+                codigos["hibiscus"] = carta;
+                verificarCartasCargadas();
+            });
+            // Cartas
         };
     
-        // Función para verificar si todas las cartas se han cargadas correctamente
+      //Verificar cartas
         function verificarCartasCargadas() {
             // Contamos cuántas cartas se han cargado
             var cantidadCartasCargadas = Object.keys(codigos).length;
